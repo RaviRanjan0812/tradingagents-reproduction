@@ -127,7 +127,7 @@ None of that content was in any analyst report. The bull researcher reached into
 
 ## 7. Reproducing this
 
-Code: [your GitHub repo link].
+Code: https://github.com/RaviRanjan0812/tradingagents-reproduction.
 
 The repo includes `requirements.txt` (pinned versions), `.env.example` (lists the one API key needed: a Gemini API key from Google AI Studio), and a single command `python run_experiment.py` that reproduces every table in this writeup. Total runtime ~2 hours; total API cost approximately $2 of Gemini credit. Every decision is checkpointed; runs are fully resumable.
 
@@ -135,4 +135,4 @@ A clean run produces zero `INVALID` decisions. If any appear, the failure-propag
 
 ---
 
-*Code: [your GitHub repo link]*
+*Code: https://github.com/RaviRanjan0812/tradingagents-reproduction*
