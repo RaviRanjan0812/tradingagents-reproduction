@@ -1,0 +1,29 @@
+# Secrets — NEVER commit
+.env
+keys_temp.txt
+
+# Virtual environment
+venv/
+
+# Python build artifacts
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+
+# Cache directory for LLM responses
+.cache/
+
+# Data files (we'll generate these)
+data_cache/
+results/
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# VS Code
+.vscode/
+
+# Jupyter
+.ipynb_checkpoints/
