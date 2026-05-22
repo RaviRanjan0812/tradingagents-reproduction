@@ -6,7 +6,7 @@
 
 ## TL;DR
 
-I reimplemented the TradingAgents multi-agent LLM framework from scratch and tested it across a 2024 Q1 bull market and a 2022 Q1 bear market, on AAPL and JPM. The framework's behavior turned out to be **asymmetric across regimes**: in bull markets it tracked buy-and-hold (no alpha), but in bear markets it reduced both maximum drawdown and total loss. On JPM 2022  specifically, the agents traded actively (9 directional trades out of 13) and outperformed buy-and-hold by 5 percentage points while cutting drawdown roughly in half. The system looks less like an alpha generator and more like a regime-aware risk overlay — though n=4 regime-runs is too small to claim this is established rather than suggestive.
+The framework's behavior turned out to be asymmetric across regimes, but the asymmetry is more nuanced than "wins in bear, ties in bull." Drawdown reduction was consistent across all four runs — the agents always lost less peak-to-trough than buy-and-hold. Return outperformance was more conditional: the agents matched buy-and-hold in bull markets, underperformed on return in a shallow choppy bear (AAPL 2022), and outperformed clearly only in the deep bear (JPM 2022: agents -7.46% vs B&H -12.56%). The cleanest reading is that the system functions as a drawdown-reduction overlay whose return benefit kicks in only when the underlying drawdown is deep enough to outweigh the cost of cautious activity. n=4 regime-runs is too small to claim this is established rather than suggestive.
 
 ---
 
@@ -76,11 +76,12 @@ Every decision is a real agent decision (zero INVALID flags across 52 pipeline r
 
 ### Interpretation
 
-The headline finding is not what I expected going in.
+The headline finding is not what I expected going in, and it's more nuanced than the bull-vs-bear story might suggest.
 
 On raw returns, the agent system did not beat buy-and-hold in three of the four runs. In JPM 2024 it stayed long the entire rally and matched the baseline exactly (+17.12% to two decimal places — they essentially replicated buy-and-hold by being correct that the rally was real). In AAPL 2024 they did slightly better than the baseline (-6.45% vs -7.51%, both negative because AAPL underperformed the broader market in Q1). In AAPL 2022 they did slightly worse (-4.13% vs -2.21%). None of these gaps is large enough to claim alpha.
 
-The interesting result is **JPM 2022**, the deepest bear regime in the sample. There the agents beat buy-and-hold by 5 percentage points on return (-7.46% vs -12.56%) AND cut maximum drawdown roughly in half (-9.59% vs -20.25%), while making 9 directional trades. This is not a "they sat in cash and got lucky" result. They traded actively and came out ahead.
+The interesting result is JPM 2022, the deepest bear regime in the sample. There the agents beat buy-and-hold by 5 percentage points on return (-7.46% vs -12.56%) AND cut maximum drawdown roughly in half (-9.59% vs -20.25%), while making 9 directional trades. This is not a "they sat in cash and got lucky" result. They traded actively and came out ahead.
+The honest counterpoint is AAPL 2022, the shallower bear in the sample. There the agents reduced drawdown (-8.44% vs -12.21%) but underperformed on return (-4.13% vs -2.21%). AAPL's Q1 2022 was choppy rather than directionally bearish — the stock bounced widely but only lost 2.2% net. The agents traded actively in this chop (3 buys, 3 sells, 7 holds) and the whipsaw cost them. So the bear-regime benefit is not uniform. The cleaner reading: drawdown reduction is consistent across all four regimes; return outperformance requires the underlying drawdown to be deep enough that cautious activity is worth its cost. Shallow choppy bears can punish the same machinery that pays off in deep bears.
 
 Across all four runs, the more consistent pattern is **drawdown reduction**:
 
@@ -129,7 +130,7 @@ None of that content was in any analyst report. The bull researcher reached into
 
 Code: https://github.com/RaviRanjan0812/tradingagents-reproduction.
 
-The repo includes `requirements.txt` (pinned versions), `.env.example` (lists the one API key needed: a Gemini API key from Google AI Studio), and a single command `python run_experiment.py` that reproduces every table in this writeup. Total runtime ~2 hours; total API cost approximately $2 of Gemini credit. Every decision is checkpointed; runs are fully resumable.
+The repo includes `requirements.txt` (pinned versions), `.env.example` (lists the one API key needed: a Gemini API key from Google AI Studio), and a single command `python run_experiment.py` that reproduces every table in this writeup. Total runtime ~2 hours; total API cost approximately $3 of Gemini credit. Every decision is checkpointed; runs are fully resumable.
 
 A clean run produces zero `INVALID` decisions. If any appear, the failure-propagation system has flagged them and you can either re-run those specific decisions or drop them from the analysis with the knowledge they were never real agent decisions.
 
