@@ -39,6 +39,8 @@ The framework's behavior is asymmetric across regimes:
 | JPM | 2024 bull | +17.12% | +17.12% | -2.30% | -2.30% |
 | JPM | 2022 bear | -7.46% | -12.56% | -9.59% | -20.25% |
 
+![Results: Agent vs Buy & Hold across regimes](./results_chart.png)
+
 In bull markets the agents tracked buy-and-hold (no alpha). In bear markets they reduced both drawdown and total loss — on JPM 2022, beating buy-and-hold by 5 percentage points while making 9 active trades. See [writeup.md](./writeup.md) for the full analysis.
 
 ## Reference
