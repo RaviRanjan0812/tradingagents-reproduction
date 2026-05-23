@@ -16,7 +16,7 @@ python run_experiment.py
 
 Then fill in your `GEMINI_API_KEY` in `.env` (get one at https://aistudio.google.com/api-keys).
 
-Total runtime ~2 hours. Total API cost ~$2 of Gemini credit. Every decision is checkpointed and resumable.
+Total runtime ~2 hours. Total API cost ~$3 of Gemini credit. Every decision is checkpointed and resumable.
 
 ## What's inside
 
